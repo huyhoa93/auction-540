@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	
+    <adminhtml_auction_auction_index>
+        <reference name="content">
+            <block type="auction/adminhtml_auction" name="auction" />
+        </reference>
+    </adminhtml_auction_auction_index>
+	
+    <adminhtml_auction_productauction_index>
+        <reference name="content">
+            <block type="auction/adminhtml_productauction" name="auction" />
+        </reference>
+    </adminhtml_auction_productauction_index>
+	
+    <adminhtml_auction_productauction_edit>
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/auction.js</script>
+            </action>
+        </reference>
+        <reference name="left">
+            <block type="adminhtml/store_switcher" name="store_switcher" before="-"></block>
+        </reference>
+    </adminhtml_auction_productauction_edit>
+	
+    <adminhtml_auction_productauction_new>
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/auction.js</script>
+            </action>
+        </reference>
+        <reference name="left">
+            <block type="adminhtml/store_switcher" name="store_switcher" before="-"></block>
+        </reference>
+    </adminhtml_auction_productauction_new>
+
+	<adminhtml_auction_productauction_depositlist>
+        <block type="core/text_list" name="root">
+            <block type="auction/adminhtml_productauction_edit_tab_listauctiondeposit" name="auction.edit.tab.listauctiondeposit"/>
+        </block>	
+    </adminhtml_auction_productauction_depositlist>
+
+    <adminhtml_auction_productauction_autobidlist>
+        <block type="core/text_list" name="root">
+            <block type="auction/adminhtml_productauction_edit_tab_autobids" name="auction.edit.tab.autobids"/>
+        </block>	
+    </adminhtml_auction_productauction_autobidlist>		
+	
+    <adminhtml_auction_productauction_watcherlist>
+        <block type="core/text_list" name="root">
+            <block type="auction/adminhtml_productauction_edit_tab_watchers" name="auction.edit.tab.watchers"/>
+        </block>	
+    </adminhtml_auction_productauction_watcherlist>
+        
+    <adminhtml_auction_productauction_winnerlist>
+        <block type="core/text_list" name="root">
+            <block type="auction/adminhtml_productauction_edit_tab_bidwinner" name="auction.edit.tab.winners"/>
+        </block>	
+    </adminhtml_auction_productauction_winnerlist>        	
+	
+    <adminhtml_auction_productauction_listproduct>	
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/auction.js</script>
+            </action>
+        </reference>
+        <block type="core/text_list" name="root">
+            <block type="auction/adminhtml_productauction_edit_tab_listproduct" name="auction.edit.tab.product"/>
+            <block type="auction/adminhtml_productauction_serializer" name="related_grid_serializer">
+                <action method="initSerializerBlock">
+                    <grid_block_name>auction.edit.tab.product</grid_block_name>
+                    <hidden_input_name>candidate_product_id</hidden_input_name>
+                </action>
+            </block>
+        </block>		
+    </adminhtml_auction_productauction_listproduct>
+	
+    <adminhtml_auction_productauction_listproductgrid>
+        <block type="core/text_list" name="root">
+            <block type="auction/adminhtml_productauction_edit_tab_listproduct" name="auction.edit.tab.product"/>
+        </block>	
+    </adminhtml_auction_productauction_listproductgrid>
+	
+    <adminhtml_sales_order_view>
+        <reference name="sales_order_tabs">
+            <action method="addTab">
+                <name>auction_order</name>
+                <block>auction/adminhtml_sales_tab_auction</block>
+            </action>
+        </reference>
+    </adminhtml_sales_order_view>		
+	
+    <adminhtml_auction_transaction_index>
+        <reference name="content">
+            <block type="auction/adminhtml_transaction" name="transation" />
+        </reference>
+    </adminhtml_auction_transaction_index>
+	
+    <adminhtml_auction_transaction_viewtransaction>
+        <reference name="content">
+            <block type="auction/adminhtml_transaction_view" name="transaction_view"></block>
+        </reference>
+    </adminhtml_auction_transaction_viewtransaction>
+</layout>
