@@ -238,8 +238,19 @@ class Magestore_Auction_IndexController extends Mage_Core_Controller_Front_Actio
             $this->_redirect('*/*/customerbid', array());
             return;
         }
-
-        $bid = Mage::getModel('auction/auction')->load($bid_id);
+		
+		$bid = Mage::getModel('auction/auction')->load($bid_id);
+		
+		$timestamp = Mage::getModel('core/date')->timestamp(time());
+		$productauction = Mage::getModel('auction/productauction')->load($bid->getProductauctionId());
+		$end_time = strtotime($productauction->getEndTime() . ' ' . $productauction->getEndDate());
+		$day_close = Mage::getStoreConfig('auction/general/day_close');
+		$last_time= $day_close*24*3600 + $end_time;
+		
+		if($last_time - $timestamp < 0){
+			$this->_redirect('*/*/customerbid', array());
+            return;
+		}
 
         //check authentication
         $customer = Mage::getSingleton('customer/session')->getCustomer();
@@ -471,8 +482,15 @@ class Magestore_Auction_IndexController extends Mage_Core_Controller_Front_Actio
         $data['customer_name'] = $customer->getName();
         $data['customer_email'] = $customer->getEmail();
         $store_id = Mage::app()->getStore()->getId();
-
-        //prepare bidder name
+		
+		//check customer send deposit
+		if (!Mage::helper('auction')->checkDeposit($data['productauction_id'],  $data['customer_id'])) {
+            $result .= $notice->getNoticeError($_helper->__('You must be wait admin approve.'));
+            $this->getResponse()->setBody($result);
+            return;
+        }
+		
+		//prepare bidder name
         if ($bidderNameType == '1') {
             $data['bidder_name'] = $_helper->encodeBidderName($auction, $customer);
         } else {

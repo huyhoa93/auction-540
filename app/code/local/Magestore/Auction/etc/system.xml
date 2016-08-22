@@ -43,6 +43,14 @@
                             <show_in_store>1</show_in_store>
                             <comment>second(s). The longer time you set, the faster loading for server bandwidth</comment>
                         </delay_time>
+						<day_close>
+                            <label>Number of days from the close auction</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                        
+                        </day_close>
                         <show_price>
                             <label>Show actual price</label>
                             <source_model>auction/source_showprice</source_model>

@@ -32,6 +32,23 @@ class Magestore_Auction_Helper_Data extends Mage_Core_Helper_Abstract {
 
         return true;
     }
+	
+	//funntion check customer send deposit
+	public function checkDeposit($productauction_id, $customer_id ){
+		$collection = Mage::getModel('auction/deposit')->getCollection()
+                ->addFieldToFilter('productauction_id', $productauction_id)
+				->addFieldToFilter('customer_id', $customer_id);
+		if (count($collection)) {
+            foreach ($collection as $item) {
+                $status = $item->getStatus();
+				if($status == 1){
+					return false;
+				}else{
+					return true;
+				}
+            }
+        }
+	}
 
     public function getProductAuctionIds($store_id = 0, $featured = null) {
         $IDs = array();

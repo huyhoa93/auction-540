@@ -9,6 +9,8 @@
 		//timeleft
 	$now_time = Mage::getModel('core/date')->timestamp(time());
 	$end_time = strtotime($auction->getEndTime() .' '. $auction->getEndDate());
+	$day_close = Mage::getStoreConfig('auction/general/day_close');
+	$last_time = $day_close*24*3600 + $end_time;
 ?>
 <?php	
 	if($auction->getStatus()==4)
@@ -40,7 +42,11 @@
 			<tr class="row">
 				<td class="title"><?php echo $this->__('Starting Price')?>:</td>
 				<td class="value init-price"><?php echo Mage::helper('core')->currency($auction->getInitPrice()) ?></td>
-			</tr>		
+			</tr>
+			<tr class="row">
+				<td class="title"><?php echo $this->__('Deposit')?>:</td>
+				<td class="value deposit"><?php echo Mage::helper('core')->currency($auction->getDeposit()) ?></td>
+			</tr>
 			<tr class="row">
 				<td class="title"><?php echo $this->__('Start Time')?>:</td>
 				<td class="value"><?php echo $this->formatDate(new Zend_Date($auction->getStartDate().' '.$auction->getStartTime(),null, 'en_GB'),'medium',true) ?></td>
@@ -48,6 +54,10 @@
 			<tr class="row">
 				<td class="title"><?php echo $this->__('Close Time')?>:</td>
 				<td class="value"><?php echo $this->formatDate(new Zend_Date($auction->getEndDate().' '.$auction->getEndTime(),null, 'en_GB'),'medium',true) ?></td>
+			</tr>
+			<tr class="row">
+				<td class="title"><?php echo $this->__('Last date for auction')?>:</td>
+				<td class="value"><?php echo $this->formatDate(new Zend_Date(date('Y:m:d', $last_time) ,null, 'en_GB'),'medium',true) ?></td>
 			</tr>
 		</table>	
 <?php 
@@ -88,6 +98,10 @@ $max_next_price_nonce = $this->__('Your bid must be less than or equal to') .' '
 			<tr class="row">
 				<td class="title"><?php echo $this->__('Close Time')?>:</td>
 				<td class="value"><?php echo $this->formatDate(new Zend_Date($auction->getEndDate().' '.$auction->getEndTime(),null, 'en_GB'),'medium',true) ?></td>
+			</tr>
+			<tr class="row">
+				<td class="title"><?php echo $this->__('Last date for auction')?>:</td>
+				<td class="value"><?php echo $this->formatDate(new Zend_Date(date('Y:m:d', $last_time) ,null, 'en_GB'),'medium',true) ?></td>
 			</tr>
 		</table>		
 <?php	
